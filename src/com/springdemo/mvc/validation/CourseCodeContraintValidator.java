@@ -6,7 +6,7 @@ import javax.validation.ConstraintValidatorContext;
 public class CourseCodeContraintValidator 
 		implements ConstraintValidator<CourseCode, String>{
 
-	private String coursePrefix;
+	private String[] coursePrefix;
 	
 	@Override
 	public void initialize(CourseCode theCourseCode) {
@@ -16,12 +16,17 @@ public class CourseCodeContraintValidator
 	@Override
 	public boolean isValid(String theCode, ConstraintValidatorContext theConstraintValidatorContext) {
 		
-		boolean result;
+		boolean result=false;
 		
 		if(theCode!=null) {
-			result=theCode.startsWith(coursePrefix);
+			for(String value : coursePrefix) {
+				result=theCode.startsWith(value);
+				if(result) {
+					break; 
+				}
+			}
 		}else {
-			result=true;
+			result= true;
 		}
 		
 		return result;
